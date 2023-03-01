@@ -1,26 +1,30 @@
 package control
 
-import business.ConviteBusiness
+import business.ConvidadoBusiness
+import entity.Convidado
+
 class Portaria {
 
-    private val conviteBusiness = ConviteBusiness()
+    private val convidadoBusiness = ConvidadoBusiness()
     init {
         println("Bem-vindo(a) a portaria!")
         println(this.controle())
     }
     private fun controle(): String{
         val idade = Console.readInt("Qual sua idade? ")
-        if (idade < 18){
+        val convidado = Convidado(idade =  idade)
+
+        if (!convidadoBusiness.maiorDeIdade(convidado.idade)){
             return "Negado. Menores de idade não são permitidos."
         }
 
-        val tipoConvite = Console.readString("Qual é o tipo de convite?")
-        if (!conviteBusiness.tipoValido(tipoConvite)) return  "Negado. Convite inválido."
+        convidado.tipo = Console.readString("Qual é o tipo de convite?")
+        if (!convidadoBusiness.tipoValido(convidado.tipo)) return  "Negado. Convidado inválido."
 
-        val codigoConvite = Console.readString("Qual é o código do convite?")
-        if (!conviteBusiness.codigoValido(codigo, tipoConvite)) return  "Negado. Convite inválido."
+        convidado.codigo = Console.readString("Qual é o código do convite?")
+        if (!convidadoBusiness.convidadoValido(convidado)) return  "Negado. Convidado inválido."
 
-        return "TODO"
+        return "Welcome :)"
     }
 }
 
@@ -42,7 +46,7 @@ fun portaria() {
         tipoConvite = tipoConvite.lowercase()
         // Validação do tipo de convite
         if (tipoConvite != "comum" && tipoConvite != "premium" && tipoConvite != "luxo") {
-            println("Negado. entity.Convite inválido.")
+            println("Negado. entity.Convidado inválido.")
             return
         }
         print("Qual o código do convite? ")
@@ -55,7 +59,7 @@ fun portaria() {
             ) {
                 println("Welcome :)")
             } else {
-                println("Negado. entity.Convite inválido")
+                println("Negado. entity.Convidado inválido")
             }
         }
     }
